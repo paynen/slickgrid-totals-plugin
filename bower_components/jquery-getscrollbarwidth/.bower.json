@@ -1,0 +1,14 @@
+{
+  "name": "jquery-getscrollbarwidth",
+  "homepage": "https://github.com/brandonaaron/jquery-getscrollbarwidth",
+  "_release": "master",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d04ef8794e8459cd65529efa3e623a9f3764d142"
+  },
+  "_source": "git://github.com/brandonaaron/jquery-getscrollbarwidth.git",
+  "_target": "*",
+  "_originalSource": "git://github.com/brandonaaron/jquery-getscrollbarwidth.git",
+  "_direct": true
+}
