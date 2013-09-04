@@ -47,7 +47,7 @@
             grid = new Slick.Grid("#myGrid", dataProvider, columns, options);
 
 
-            grid.registerPlugin(new TotalsPlugin());
+            grid.registerPlugin(new TotalsPlugin($.getScrollbarWidth()));
 
           })
         </script>

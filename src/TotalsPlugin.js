@@ -1,7 +1,10 @@
-function TotalsPlugin() {
+function TotalsPlugin(scrollbarWidth) {
+  this._scrollbarWidth = scrollbarWidth;
 }
 
 TotalsPlugin.prototype._scrollOffset = 0;
+
+TotalsPlugin.prototype._scrollbarWidth = 16;
 
 TotalsPlugin.prototype._rowHeight = 0;
 
@@ -16,7 +19,7 @@ TotalsPlugin.prototype.init = function (grid) {
   var viewport = grid.getCanvasNode().parentElement;
   var width = viewport.offsetWidth;
   if (viewport.scrollHeight > viewport.offsetHeight) {
-    width -= $.getScrollbarWidth();
+    width -= this._scrollbarWidth;
   }
 
   var style = 'top: -' + this._rowHeight + 'px; width: ' + width + 'px;';
@@ -53,7 +56,7 @@ TotalsPlugin.prototype._appendTotalsRow = function (grid) {
 
 TotalsPlugin.prototype._handleColumnsResized = function (event, update) {
   var viewport = update.grid.getCanvasNode().parentElement;
-  var top = (viewport.scrollWidth > viewport.offsetWidth) ? this._rowHeight + $.getScrollbarWidth() : this._rowHeight;
+  var top = (viewport.scrollWidth > viewport.offsetWidth) ? this._rowHeight + this._scrollbarWidth : this._rowHeight;
   this._$totals.width(viewport.scrollWidth);
   this._$totalsViewport.css('top', top * -1 + 'px')
 };
