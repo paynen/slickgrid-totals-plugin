@@ -22,7 +22,7 @@ TotalsPlugin.prototype.init = function (grid) {
     width -= this._scrollbarWidth;
   }
 
-  var style = 'top: -' + this._rowHeight + 'px; width: ' + width + 'px;';
+  var style = 'top: -' + this._rowHeight + 'px; width: ' + width + 'px; position: relative;';
   var totalsViewport = '<div style="' + style + '" class="slick-viewport totals-viewport">';
   viewport.insertAdjacentHTML('afterend', totalsViewport);
   this._$totalsViewport = $('.totals-viewport');
@@ -39,14 +39,15 @@ TotalsPlugin.prototype.destroy = function () {
 
 TotalsPlugin.prototype._appendTotalsRow = function (grid) {
   var width = grid.getCanvasNode().offsetWidth;
-  var style = 'top: -' + this._rowHeight + 'px; width: ' + width + 'px; position: relative;';
+  var style = 'width: ' + width + 'px; position: relative;';
   var $totalsRow = $('<div style="' + style + '" class="ui-widget-content slick-row totals"></div>');
   var totals = grid.getData().getTotals();
   var columns = grid.getColumns();
   var $cell;
 
   for (var i = 0, l = columns.length; i < l; i++) {
-    $cell = $('<div class="slick-cell"></div>').addClass('l' + i + ' r' + i).text(totals[columns[i].id]);
+    $cell = $('<div class="slick-cell"></div>').addClass('l' + i + ' r' + i);
+    $cell.text(totals[columns[i].id]);
     $totalsRow.append($cell);
   }
 
