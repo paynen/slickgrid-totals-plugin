@@ -11,14 +11,16 @@
         <script src="../bower_components/slickgrid/slick.core.js"></script>
         <script src="../bower_components/slickgrid/slick.grid.js"></script>
         <script src="../bower_components/slickgrid/slick.dataview.js"></script>
-        <script src="../src/TotalsDataProvider.js"></script>
+        <script src="../src/TotalsDataView.js"></script>
         <script src="../src/TotalsPlugin.js"></script>
     </head>
     <body>
         <div id="myGrid" style="width:600px;height:500px;"></div>
+        <button class="remove">Remove Item</button>
         <script>
           var grid;
           var columns = [
+            {id: "id", name: "Index", field: "id", hasTotal: true},
             {id: "title", name: "Title", field: "title"},
             {id: "duration", name: "Duration", field: "duration", hasTotal: true},
             {id: "%", name: "% Complete", field: "percentComplete", hasTotal: true},
@@ -34,8 +36,9 @@
 
           $(function () {
             var data = [];
-            for (var i = 0; i < 500; i++) {
+            for (var i = 0; i < 50000; i++) {
               data[i] = {
+                id: i,
                 title: "Task " + i,
                 duration: "5",
                 percentComplete: Math.round(Math.random() * 100),
@@ -45,11 +48,31 @@
               };
             }
 
-            var dataProvider = new TotalsDataProvider(data, columns);
+            var dataView = new Slick.Data.DataView();
+            dataView.setItems(data);
+
+            var dataProvider = new TotalsDataView(dataView, columns);
             grid = new Slick.Grid("#myGrid", dataProvider, columns, options);
 
+            var totalsPlugin = new TotalsPlugin($.getScrollbarWidth());
+            grid.registerPlugin(totalsPlugin);
 
-            grid.registerPlugin(new TotalsPlugin($.getScrollbarWidth()));
+            dataView.onRowCountChanged.subscribe(function (e, args) {
+              grid.updateRowCount();
+              grid.render();
+              totalsPlugin.render();
+            });
+
+            dataView.onRowsChanged.subscribe(function (e, args) {
+              grid.invalidateRows(args.rows);
+              grid.render();
+              totalsPlugin.render();
+            });
+
+            var id = 0;
+            $('.remove').on('click', function() {
+              dataView.deleteItem(id++)
+            })
 
           })
         </script>

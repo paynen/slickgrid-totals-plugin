@@ -38,6 +38,16 @@ TotalsPlugin.prototype.destroy = function () {
   this._$totalsViewport.remove();
 };
 
+TotalsPlugin.prototype.render = function () {
+  var totals = grid.getData().getTotals();
+  var columns = grid.getColumns();
+  var cells = this._$totals.children();
+
+  for (var i = 0, l = columns.length; i < l; i++) {
+    cells[i].innerText = totals[columns[i].id] || '';
+  }
+};
+
 TotalsPlugin.prototype._appendTotalsRow = function (grid) {
   var width = grid.getCanvasNode().offsetWidth;
   var style = 'width: ' + width + 'px; position: relative;';
