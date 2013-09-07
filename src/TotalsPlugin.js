@@ -22,7 +22,7 @@ TotalsPlugin.prototype.init = function (grid) {
     width -= this._scrollbarWidth;
   }
 
-  var style = 'top: -' + this._rowHeight + 'px; width: ' + width + 'px; position: relative;';
+  var style = 'top: -' + this._rowHeight + 'px; width: ' + width + 'px;';
   var totalsViewport = '<div style="' + style + '" class="slick-viewport totals-viewport">';
   viewport.insertAdjacentHTML('afterend', totalsViewport);
   this._$totalsViewport = $('.totals-viewport');
@@ -56,9 +56,10 @@ TotalsPlugin.prototype._appendTotalsRow = function (grid) {
 };
 
 TotalsPlugin.prototype._handleColumnsResized = function (event, update) {
-  var viewport = update.grid.getCanvasNode().parentElement;
+  var canvas = update.grid.getCanvasNode();
+  var viewport = canvas.parentElement;
   var top = (viewport.scrollWidth > viewport.offsetWidth) ? this._rowHeight + this._scrollbarWidth : this._rowHeight;
-  this._$totals.width(viewport.scrollWidth);
+  this._$totals.width(canvas.scrollWidth);
   this._$totalsViewport.css('top', top * -1 + 'px')
 };
 
