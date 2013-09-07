@@ -1,6 +1,7 @@
 function TotalsDataProvider(data, columns) {
   var totals = {};
   var totalsMetadata = {
+    cssClasses: 'total-spacer-row',
     columns: {}
   };
 
