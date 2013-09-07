@@ -16,6 +16,7 @@
     </head>
     <body>
         <div id="myGrid" style="width:600px;height:500px;"></div>
+        <button class="add">Add Item</button>
         <button class="remove">Remove Item</button>
         <script>
           var grid;
@@ -34,18 +35,23 @@
             enableColumnReorder: true
           };
 
+          function createItem(i) {
+            return {
+              id:              i,
+              title:           "Task " + i,
+              duration:        "5",
+              percentComplete: Math.round(Math.random() * 100),
+              start:           "01/01/2009",
+              finish:          "01/05/2009",
+              effortDriven:    (i % 5 == 0)
+            };
+          }
+
           $(function () {
             var data = [];
-            for (var i = 0; i < 50000; i++) {
-              data[i] = {
-                id: i,
-                title: "Task " + i,
-                duration: "5",
-                percentComplete: Math.round(Math.random() * 100),
-                start: "01/01/2009",
-                finish: "01/05/2009",
-                effortDriven: (i % 5 == 0)
-              };
+
+            for (var i = 0; i < 500; i++) {
+              data[i] = createItem(i);
             }
 
             var dataView = new Slick.Data.DataView();
@@ -72,7 +78,11 @@
             var id = 0;
             $('.remove').on('click', function() {
               dataView.deleteItem(id++)
-            })
+            });
+
+            $('.add').on('click', function() {
+              dataView.insertItem(0, createItem(dataView.getLength()));
+            });
 
           })
         </script>
