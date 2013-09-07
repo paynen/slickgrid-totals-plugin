@@ -28,9 +28,10 @@ TotalsPlugin.prototype.init = function (grid) {
   this._$totalsViewport = $('.totals-viewport');
   this._appendTotalsRow(grid);
 
-  grid.onColumnsResized.subscribe(this._handleColumnsResized.bind(this));
-  grid.onColumnsReordered.subscribe(this._handleColumnsReordered.bind(this));
-  grid.onScroll.subscribe(this._handleScroll.bind(this));
+  var self = this;
+  grid.onColumnsResized.subscribe(function() { self._handleColumnsResized.apply(self, arguments) });
+  grid.onColumnsReordered.subscribe(function() { self._handleColumnsReordered.apply(self, arguments) });
+  grid.onScroll.subscribe(function() { self._handleScroll.apply(self, arguments) });
 };
 
 TotalsPlugin.prototype.destroy = function () {
