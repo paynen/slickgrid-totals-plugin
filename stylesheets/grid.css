@@ -1,0 +1,9 @@
+.slick-row.totals .slick-cell {
+    background: #eee;
+}
+
+.grid-container {
+    width: 600px;
+    height: 500px;
+    margin-bottom: 10px;
+}

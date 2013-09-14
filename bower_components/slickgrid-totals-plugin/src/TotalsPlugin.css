@@ -1,0 +1,12 @@
+.total-spacer-row {
+    visibility: hidden;
+}
+
+.slick-viewport.totals-viewport {
+    position: relative;
+    overflow: hidden;
+}
+
+.slick-viewport .slick-row.totals {
+    position: relative;
+}

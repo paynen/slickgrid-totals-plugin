@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../bower_components/slickgrid/slick.grid.css" type="text/css"/>
+        <link rel="stylesheet" href="../src/TotalsPlugin.css" type="text/css"/>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+        <script src="../bower_components/slickgrid/lib/jquery-1.7.min.js"></script>
+        <script src="../bower_components/slickgrid/lib/jquery-ui-1.8.16.custom.min.js"></script>
+        <script src="../bower_components/slickgrid/lib/jquery.event.drag-2.0.min.js"></script>
+        <script src="../bower_components/jquery-getscrollbarwidth/jquery.getscrollbarwidth.js"></script>
+        <script src="../bower_components/slickgrid/slick.core.js"></script>
+        <script src="../bower_components/slickgrid/slick.grid.js"></script>
+        <script src="../bower_components/slickgrid/slick.dataview.js"></script>
+        <script src="../src/TotalsDataView.js"></script>
+        <script src="../src/TotalsPlugin.js"></script>
+    </head>
+    <body>
+        <div id="myGrid" style="width:600px;height:500px;"></div>
+        <button class="add">Add Item</button>
+        <button class="remove">Remove Item</button>
+        <script>
+          var grid;
+          var columns = [
+            {id: "id", name: "Index", field: "id", hasTotal: true},
+            {id: "title", name: "Title", field: "title"},
+            {id: "duration", name: "Duration", field: "duration", hasTotal: true},
+            {id: "%", name: "% Complete", field: "percentComplete", hasTotal: true},
+            {id: "start", name: "Start", field: "start"},
+            {id: "finish", name: "Finish", field: "finish"},
+            {id: "effort-driven", name: "Effort Driven", field: "effortDriven"}
+          ];
+
+          var options = {
+            enableCellNavigation: true,
+            enableColumnReorder: true
+          };
+
+          function createItem(i) {
+            return {
+              id:              i,
+              title:           "Task " + i,
+              duration:        "5",
+              percentComplete: Math.round(Math.random() * 100),
+              start:           "01/01/2009",
+              finish:          "01/05/2009",
+              effortDriven:    (i % 5 == 0)
+            };
+          }
+
+          $(function () {
+            var data = [];
+
+            for (var i = 0; i < 500; i++) {
+              data[i] = createItem(i);
+            }
+
+            var dataView = new Slick.Data.DataView();
+            dataView.setItems(data);
+
+            var dataProvider = new TotalsDataView(dataView, columns);
+            grid = new Slick.Grid("#myGrid", dataProvider, columns, options);
+
+            var totalsPlugin = new TotalsPlugin($.getScrollbarWidth());
+            grid.registerPlugin(totalsPlugin);
+
+            dataView.onRowCountChanged.subscribe(function (e, args) {
+              grid.updateRowCount();
+              grid.render();
+              totalsPlugin.render();
+            });
+
+            dataView.onRowsChanged.subscribe(function (e, args) {
+              grid.invalidateRows(args.rows);
+              grid.render();
+              totalsPlugin.render();
+            });
+
+            var id = 0;
+            $('.remove').on('click', function() {
+              dataView.deleteItem(id++)
+            });
+
+            $('.add').on('click', function() {
+              dataView.insertItem(0, createItem(dataView.getLength()));
+            });
+
+          })
+        </script>
+    </body>
+</html>
