@@ -92,6 +92,9 @@ Browser Support
 ---------------
 This should work everywhere slickgrid does but it has only been tested on IE8 and 9 and Chrome.
 
+If you find a problem please raise an [issue][3].
+
 
 [1]: https://github.com/mleibman/SlickGrid/
 [2]: https://github.com/mleibman/SlickGrid/wiki/DataView
+[3]: https://github.com/paynen/slickgrid-totals-plugin/issues
