@@ -39,8 +39,8 @@ TotalsPlugin.prototype.destroy = function () {
 };
 
 TotalsPlugin.prototype.render = function () {
-  var totals = grid.getData().getTotals();
-  var columns = grid.getColumns();
+  var totals = this._grid.getData().getTotals();
+  var columns = this._grid.getColumns();
   var cells = this._$totals.children();
 
   for (var i = 0, l = columns.length; i < l; i++) {
